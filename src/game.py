@@ -15,7 +15,7 @@ class Game:
         )
 
     def play(self):
-        print("🎮 JOGO DA VELHA")
+        print("JOGO DA VELHA")
 
         while True:
             self.board.show()
