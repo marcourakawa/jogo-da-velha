@@ -1,40 +1,28 @@
-class Board():
+class Board:
     def __init__(self):
-        """
-        Incicializa o tabuleiro 3x3 vazio.
-        """
-        self.size = 3
-        self.grid = [[" " for _ in range(self.size )] for _ in range(self.size)]
-        self.move_count = 0
+        self.positions = [" " for _ in range(9)]
 
     def show(self):
-        """
-        Exibe o tabuleiro no terminal.
-        """
-        print("\n")
-        for row in self.grid:
-            print("|".join(row))
-            print("-" * 9)
+        print()
+        for i in range(0, 9, 3):
+            print(self.positions[i] + " | " + self.positions[i+1] + " | " + self.positions[i+2])
+            if i < 6:
+                print("--+---+--")
+        print()
 
-    def is_position_free(self, row, col):
-        """
-        Verificar se a posição está livre.
-        """
-        return self.grid[row][col] == " "
-
-    def mark_position(self, row, col, symbol):
-        """
-        Marca uma posição com X ou O.
-        """
-        if self.is_position_free(row, col):
-            self.grid[row][col] = symbol
-            self.move_count += 1
+    def make_move(self, position, symbol):
+        if self.positions[position] == " ":
+            self.positions[position] = symbol
             return True
         return False
-    
+
+    def check_winner(self, symbol):
+        wins = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+        ]
+        return any(all(self.positions[i] == symbol for i in combo) for combo in wins)
+
     def is_full(self):
-        """
-        Verificar se o tabuleiro está cheio.
-        """
-        return self.moves_count == self.size * self.size
-    
+        return " " not in self.positions
